@@ -1,6 +1,6 @@
 STRCPY SYNTAX 
 
-char *strcpy(char *dest, const char *src);
+strcpy(destination, source);
 
 Example: 
 
@@ -26,6 +26,11 @@ Important notes:
    string copying.
  * The strcpy function does not check for overlapping source and destination strings. If the strings overlap, the behavior may be 
    undefined.
+ * We do not need to specify the null termination explicitly when using strcpy. The function is designed to automatically copy the
+   null terminator from the source string to the destination string.
+   Here's how it works:
+   strcpy copies characters from the source string to the destination string until it encounters the null terminator (\0).
+   Once the null terminator is found, it is also copied to the destination string, effectively terminating the copied string.
 
 STRNCPY SYNTAX 
 
