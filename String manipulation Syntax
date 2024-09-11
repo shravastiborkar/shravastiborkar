@@ -76,8 +76,268 @@ The \0 character is a special character that represents the end of a string in C
 read characters until it encounters the \0 character. This indicates that the string has ended.
 
 
+sprint
+
+int sprintf(char *str, const char *format, ...);
+Use code with caution.
+
+Parameters:
+
+str: A pointer to the destination character array where the formatted string will be stored.
+format: A format string that controls how the subsequent arguments are converted and inserted into the destination string.
+...: A variable number of arguments to be formatted and inserted into the destination string based on the format string.
+Return Value:
+
+The total number of characters written to the destination string, excluding the terminating null character (\0).
+Example:
+
+C
+#include <stdio.h>
+
+int main() {
+    char buffer[100];
+
+    sprintf(buffer, "Hello, %s! You are %d years old.", "Alice", 30);
+    printf("%s\n", buffer);
+
+    return 0;
+}
+
+Output:
+
+Hello, Alice! You are 30 years old.
+Explanation:
+
+char buffer[100];: Declares a character array named buffer with a maximum length of 100 characters to store the formatted string.
+sprintf(buffer, "Hello, %s! You are %d years old.", "Alice", 30);:
+The first argument, buffer, is the destination character array where the formatted string will be stored.
+The second argument, "Hello, %s! You are %d years old.", is the format string that controls how the subsequent arguments are inserted
+into the destination string.
+The %s placeholder represents a string, and the %d placeholder represents an integer.
+The third and fourth arguments, "Alice" and 30, are the values that will be inserted into the format string at the corresponding
+placeholders.
+The sprintf function formats the string according to the format string and stores the result in the buffer array.
+printf("%s\n", buffer);: Prints the formatted string stored in the buffer array to the console.
+
+Key Points:
+
+The format string can contain various placeholders for different data types (e.g., %s for strings, %d for integers, %f for 
+floating-point numbers).
+The number of placeholders in the format string must match the number of arguments provided to sprintf.
+Ensure that the destination buffer is large enough to accommodate the formatted string.
+sprintf can be used to create dynamic strings based on input data or other variables.
+
+sprintf
+
+int snprintf(char *str, size_t size, const char *format, ...);
+
+Parameters:
+
+str: A pointer to the destination character array where the formatted string will be stored.
+size: The maximum number of characters to write to the destination string, including the terminating null character.
+format: A format string that controls how the subsequent arguments are converted and inserted into the destination string.
+...: A variable number of arguments to be formatted and inserted into the destination string based on the format string.
+Return Value:
+
+The total number of characters that would be written to the destination string, excluding the terminating null character, if the 
+buffer were large enough.
+Example:
+
+C
+#include <stdio.h>
+
+int main() {
+    char buffer[100];
+
+    snprintf(buffer, sizeof(buffer), "Hello, %s! You are %d years old.", "Alice", 30);
+    printf("%s\n", buffer);
+
+    return 0;
+}
 
 
+Output:
+
+Hello, Alice! You are 30 years old.
+Explanation:
+
+char buffer[100];: Declares a character array named buffer with a maximum length of 100 characters to store the formatted string.
+snprintf(buffer, sizeof(buffer), "Hello, %s! You are %d years old.", "Alice", 30);:
+The first argument, buffer, is the destination character array where the formatted string will be stored.
+The second argument, sizeof(buffer), is the maximum number of characters that can be written to the destination string, including 
+the terminating null character. This prevents buffer overflows.
+The third argument, "Hello, %s! You are %d years old.", is the format string that controls how the subsequent arguments are inserted 
+into the destination string.
+The %s placeholder represents a string, and the %d placeholder represents an integer.
+The fourth and fifth arguments, "Alice" and 30, are the values that will be inserted into the format string at the corresponding 
+placeholders.
+The snprintf function formats the string according to the format string and stores the result in the buffer array, ensuring that the
+string does not exceed the specified size.
+printf("%s\n", buffer);: Prints the formatted string stored in the buffer array to the console.
+Key Points:
+
+snprintf is safer than sprintf because it takes a size parameter, preventing buffer overflows.
+The size parameter should be the maximum number of characters that can be written to the destination string, including the terminating
+null character.
+The format string can contain various placeholders for different data types (e.g., %s for strings, %d for integers, %f for 
+floating-point numbers).
+The number of placeholders in the format string must match the number of arguments provided to snprintf.
+snprintf returns the total number of characters that would be written to the destination string if the buffer were large enough.
+
+* Is null pointer mandatory to add while using sprintf and snprintf
+
+No, a null pointer is not mandatory to add while using sprintf and snprintf.
+
+Both functions take a pointer to the destination character array as their first argument. This pointer should point to a valid memory 
+location where the formatted string will be stored. If the pointer is null, it will result in undefined behavior.
+
+Here's a breakdown of why a null pointer is not required:
+sprintf:
+
+Copies the formatted string to the destination array pointed to by the first argument.
+If the pointer is null, it will attempt to write to an invalid memory location, leading to undefined behavior or a potential crash.
+snprintf:
+
+Similar to sprintf, it copies the formatted string to the destination array.
+However, it also takes a size parameter that limits the maximum number of characters to be written. This helps prevent buffer 
+overflows even if the pointer is null.
+
+null pointer, will likely lead to undefined behavior.
+
+memcpy
+
+Syntax:
+
+C
+void *memcpy(void *dest, const void *src, size_t n);
+Use code with caution.
+
+Parameters:
+
+dest: A pointer to the destination memory location where the data will be copied.
+src: A pointer to the source memory location from which the data will be copied.
+n: The number of bytes to be copied.   
+Return Value:
+
+A pointer to the destination memory location (dest).
+Explanation:
+
+The memcpy function copies n bytes of data from the memory location pointed to by src to the memory location pointed to by dest.
+It returns a pointer to the destination memory location (dest).
+
+ memcpy(destination, source, sizeof(source));
+
+Key Points:
+
+The memcpy function can be used to copy any type of data, not just strings.
+Ensure that the destination memory location is large enough to accommodate the data being copied.
+Avoid using memcpy with arrays of fixed size to prevent buffer overflows. Consider using safer alternatives like memmove or strncpy.
+The memcpy function does not check for overlapping source and destination memory locations. Overlapping memory locations can lead to
+undefined behavior.
+
+To avoid buffer overflows when using memcpy, you should follow these guidelines:
+
+Ensure Correct Size: Always make sure that the destination buffer is large enough to accommodate the data you want to copy. You can 
+use the sizeof operator to determine the size of an array or structure.
+Use sizeof: Use sizeof to calculate the size of the data you want to copy. This will help you avoid copying more data than the 
+destination buffer can hold.
+Avoid Overlapping Buffers: Be cautious when using memcpy with overlapping buffers. Overlapping buffers can lead to undefined behavior
+and potential security vulnerabilities. If you need to copy data between overlapping buffers, consider using memmove instead.
+Check for Errors: memcpy returns a pointer to the destination buffer. You can check the return value to ensure that the copy was 
+successful. If the return value is null, it indicates an error.
+Use Safer Alternatives: If possible, consider using safer alternatives like strncpy or strlcpy for copying strings. These functions
+have built-in safeguards to prevent buffer overflows.
+
+No, you don't need to explicitly null-terminate the destination buffer when using memcpy to copy strings.
+
+Here's why:
+
+memcpy copies bytes: memcpy is a generic function that copies a specified number of bytes from one memory location to another. It 
+doesn't have specific knowledge of string structures or null terminators.
+Null terminator included: If you are copying a string using memcpy, the null terminator is typically included within the string data.
+When you specify the correct number of bytes to copy, memcpy will automatically copy the null terminator along with the other 
+characters.
+Avoiding buffer overflows: The key to preventing buffer overflows is to ensure that the destination buffer is large enough to 
+accommodate the entire string, including the null terminator. Using sizeof to determine the size of the source string and ensuring 
+the destination buffer is at least as large will guarantee that the null terminator is copied correctly.
+
+What is memset and explain the syntax of memset
+
+memset is a C library function used to fill a block of memory with a specific value. It's often used to initialize arrays or 
+structures to a particular value.
+Syntax:
+void *memset(void *dest, int c, size_t n);
+
+Parameters:
+ * dest: A pointer to the memory block to be filled.
+ * c: The value to be filled into each byte of the memory block.
+ * n: The number of bytes to be filled.
+Return Value:
+ * A pointer to the memory block dest.
+Example:
+int array[10];
+memset(array, 0, sizeof(array));
 
 
+strcmp
+int strcmp(const char *str1, const char *str2);
 
+Parameters:
+
+str1: A pointer to the first string to be compared.
+str2: A pointer to the second string to be compared.
+Return Value:   
+
+A negative value if str1 is less than str2.
+Zero if str1 is equal to str2.
+A positive value if str1 is greater than str2.
+Explanation:
+
+The strcmp function compares the two strings str1 and str2 character by character.
+It compares the corresponding characters until a difference is found or the end of both strings is reached.
+If a difference is found, the function returns an integer indicating which string is lexicographically greater.
+If both strings are equal, the function returns zero.
+
+Is null termination required
+Yes, null termination is essential when using strcmp to compare strings.
+
+strcmp compares strings character by character until it encounters a null terminator (\0) in either string. If the null terminator 
+is not present in both strings, the comparison behavior will be undefined.
+
+Here's why null termination is crucial:
+
+Comparison termination: strcmp uses the null terminator to determine the end of each string. Without it, the function would continue
+comparing characters indefinitely, potentially leading to unexpected results or even program crashes.
+String integrity: A null terminator is a fundamental part of a C string. It marks the end of the string data and ensures that the
+string can be correctly interpreted and manipulated.
+Example:
+
+C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str1[] = "hello";
+    char str2[] = "world";
+
+    // Comparing null-terminated strings
+    int result = strcmp(str1, str2);
+    printf("Comparison result: %d\n", result);
+
+    // Comparing strings without null terminators (undefined behavior)
+    char str3[] = "abc";
+    char str4[] = "def";
+    str4[2] = '\0'; // Manually terminate str4
+    result = strcmp(str3, str4);
+    printf("Comparison result: %d\n", result);
+
+    return 0;
+}
+Use code with caution.
+
+In this example, the first strcmp call compares two properly null-terminated strings, resulting in a defined comparison. The second 
+strcmp call compares strings where str4 is not null-terminated. This leads to undefined behavior, as the comparison might continue 
+beyond the intended end of the strings.
+
+Always ensure that the strings you pass to strcmp are properly null-terminated. This will guarantee correct string comparison and 
+avoid potential issues.
