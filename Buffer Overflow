@@ -1,5 +1,47 @@
 Buffer Overflow
 
+Buffer overflow: extra data will flow to the adjacent buffer and overwrite that data. It can control, crash, or modify the data. 
+Types: stack based, heap based, integer, format strings, Unicode overflow
+String manipulation functions:
+scanf: It is a function that stands for Scan Formatted String. It is used to read data from stdin (standard input stream i.e., usually keyboard) and then writes the result into the given arguments. Get the user input and store it in a variable. 
+sprintf: formats and stores string into a buffer. (Formatted output should not exceed buffer size)
+slprintf: not a standard C library function. Custom implementation or a variant found in specific libraries or systems. Returns the actual number of characters written to the buffer, excluding the null terminator. Useful for detect if the buffer was large enough.
+printf: check for input format string correctly. %s (string), %d(integer), %f(float), %c (character), %x %o (hexadecimal, octal), %e, %g, %lu, %ld, %lf
+snprintf: writes formatted output to string with maximum length. It takes a max buffer size as an argument. Returns the number of characters that would have been written. (It can lead to buffer overflow if specified size is not accurate, check for handling of truncation error (is it a vuln or not))
+strcpy(): copies a string to destination buffer without checking the destination buffer size. Id source string is longer than destination buffer, if will overflow. (Avoid using for buffer overflows)
+strncpy(): copies specified number of characters from source string to destination buffer, might not guarantee null termination (if the source string is truncated (shortened to fit a buffer length)). (Be cautious) (slower than string copy i.e., strncpy) (ensure null termination in the destination buffer)
+strcat(): Appends a string to the end of a destination string, doesn’t check destination buffer size.
+strncat(): used to append a specific number of characters from one string to the end of another string. Could be vuln (should always calculate available space in destination buffer)  
+gets(): reads the line of code from stdin (standard in) and stores it into a buffer. doesn’t check how long is buffer size. (Inherently dangerous)
+fgets (): function is short for file-get-string. Remember that files can be pretty much anything on *nix systems (sockets, streams, or actual files), so we can use it to read from standard input, which again, is also technically a file.  it’s safer as it limits the input size. (validate input before converting it into an acceptable input type (char,int, decimal etc)) (it’s safer than scanf, check for null termination)
+use (snprintf, strncpy, strlcpy) for safer implementation 
+memcpy: copies specified block of memory from one location to another. Doesn’t perform bounds checking, it blindly copies n bytes fromone memory location to another, regardless of the size of destination buffer.
+Doesn’t automatically adds a null terminator
+String comparison:
+Strcmp (str1,str2): compares 2 strings alphabetically. Returns 0 if equal, negative if 1<2, positive is 1>2.
+
+Parameters: to, from (pointer to memory location from where data is copied), mumBytes (no of bytes to be copied), return value (returns a pointer to the memory location where data is copied)
+
+Stack corruption: buffer corruption
+Heap corruption: malloc function is corrupting.
+Remediations:
+Use OS runtime protections, keep devices/libraries patched, use principal of least privilege (to diff users/account types), use memory safe programing languages (java, python, c#) 
+Stack protector option gcc option: it will see if have overflown a buffer and will terminate the program (will not work for heap corruption), validate data,
+
+
+
+
+Function: block of code that performs the task
+Void keyword—reserved type used to specify that a method does not return any data type.
+Main – entry point of program 
+Class- container for related functions
+Method—function inside the class
+String – sequence of characters
+
+ 
+
+
+Memory in c/c++/java can be allocated to heap or stack
 
 STRCPY SYNTAX 
 
