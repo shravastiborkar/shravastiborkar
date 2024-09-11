@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm Shravasti Borkar</h1>
-<h3 align="center">Passionate for Cybersecurity, always up for a challenge and eager to learn from others</h3>
+<h3 align="center">Passionate for Cybersecurity, always up for a challenge and eager to learn </h3>
 
 <img align="right" alt="coding" width="400" src="https://giffiles.alphacoders.com/171/171294.gif">
 
