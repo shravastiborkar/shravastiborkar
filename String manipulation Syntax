@@ -1,0 +1,78 @@
+STRCPY SYNTAX 
+
+char *strcpy(char *dest, const char *src);
+
+Example: 
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char source[] = "Hello, world!";
+    char destination[20];
+
+    strcpy(destination, source);
+
+    printf("Source string: %s\n", source);
+    printf("Destination string: %s\n", destination);
+
+    return 0;
+}
+
+Important notes:
+ * Ensure that the destination array dest is large enough to accommodate the entire source string, including the null character. 
+   Otherwise, you may encounter buffer overflow issues.
+ * Avoid using strcpy with arrays of unknown size, as it can lead to unexpected behavior. Consider using strncpy instead for safer 
+   string copying.
+ * The strcpy function does not check for overlapping source and destination strings. If the strings overlap, the behavior may be 
+   undefined.
+
+STRNCPY SYNTAX 
+
+char *strncpy(char *dest, const char *src, size_t n);
+
+dest: A pointer to the destination character array where the copied string will be stored.
+ * src: A pointer to the source character array containing the string to be copied.
+ * n: The maximum number of characters to be copied from src to dest.
+
+Example:
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char source[] = "Hello, world!";
+    char destination[10];
+
+    strncpy(destination, source, 5);
+
+    printf("Source string: %s\n", source);
+    printf("Destination string: %s\n", destination);
+
+    return 0;
+}
+
+Output:
+Source string: Hello, world!
+Destination string: Hello
+
+Important notes:
+ * Unlike strcpy, strncpy does not automatically add a null character to the end of the destination string if the source string is 
+   shorter than n. You may need to manually add a null character if necessary.
+ * strncpy is generally considered safer than strcpy because it prevents buffer overflows by limiting the number of characters copied.
+ * If the length of the source string is greater than or equal to n, the destination string will not be null-terminated. This can lead
+   to unexpected behavior if you attempt to treat it as a null-terminated string.
+
+strncpy(smallBuffer, userld, sizeof(smallBuffer));
+smallBuffer[sizeof(smallBuffer) - 1] = '\0'; // Add null terminator
+
+Null termination is added using the \0 character.
+
+The \0 character is a special character that represents the end of a string in C. When a string is processed, the code continues to 
+read characters until it encounters the \0 character. This indicates that the string has ended.
+
+
+
+
+
+
+
